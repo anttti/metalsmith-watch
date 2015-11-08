@@ -227,7 +227,7 @@ export default function(options) {
 
     const patterns = {}
     Object.keys(options.paths).map(pattern => {
-      const watchPattern = pattern.replace("${source}", normalizePath(metalsmith._source))
+      const watchPattern = pattern.replace("${source}", normalizePath(metalsmith.source()))
       patterns[watchPattern] = options.paths[pattern]
     })
 
@@ -278,7 +278,7 @@ export default function(options) {
           }
 
           const patternsToUpdate = Object.keys(patterns).filter(pattern => patterns[pattern] === true)
-          const filesToUpdate = multimatch(pathsToUpdate, patternsToUpdate).map(file => relativePath(metalsmith._source, file))
+          const filesToUpdate = multimatch(pathsToUpdate, patternsToUpdate).map(file => relativePath(metalsmith.source(), file))
           if (filesToUpdate.length) {
             buildFiles(metalsmith, filesToUpdate, livereload, options, previousFilesMap)
           }
